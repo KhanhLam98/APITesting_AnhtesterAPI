@@ -1,0 +1,11 @@
+{
+  "name": "All Passion Spent",
+  "category_id": 3,
+  "price": 16000,
+  "image_ids": [
+    16,
+    17,
+    18
+  ],
+  "status": false
+}
