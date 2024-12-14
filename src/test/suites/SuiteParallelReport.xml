@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Allure Parallel Report" verbose="1" parallel="tests">
+    <test name="Parallel Allure 1" parallel="methods">
+        <classes>
+            <class name="testcases.UserManagement"/>
+        </classes>
+    </test>
+
+    <test name="Parallel Allure 2" parallel="classes">
+        <classes>
+            <class name="testcases.CategoryManagement"/>
+            <class name="testcases.ImageManagement"/>
+        </classes>
+    </test>
+
+    <test name="Parallel Allure 3" parallel="methods">
+        <classes>
+            <class name="testcases.BookManagement"/>
+        </classes>
+    </test>
+</suite>

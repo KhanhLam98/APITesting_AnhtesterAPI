@@ -88,6 +88,8 @@ public class Verify_BookManagement_Response {
 
 
     public static void verifyDelete(Response response, int id) {
+        ApiKeyword.verifyStatusCode(response, 200);
+        ApiKeyword.verifyMessage(response, "message", "Success");
         Response verifyResponse = ApiKeyword.get(EndPointGlobal.BOOK + "/" +id);;
         int isDeleted = verifyResponse.getStatusCode();
         Assert.assertEquals(isDeleted, 400,"The book hasn't been deleted");

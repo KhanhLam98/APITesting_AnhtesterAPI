@@ -7,14 +7,18 @@ import globals.EndPointGlobal;
 import globals.TokenGlobal;
 import helpers.DataFakerHelper;
 import helpers.JsonHelper;
+import io.qameta.allure.*;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import keywords.ApiKeyword;
+import listeners.TestListener;
 import model.pojo.BookManagement_Lombok;
 import model.verifyresponse.Verify_BookManagement_Response;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import utils.LogUtils;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,18 +29,36 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
+@Listeners(TestListener.class)
 public class BookManagement extends BaseTest {
     private int id = 2;
+
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Epic("Book Management Test")
+    @Feature("Get Method")
+    @Story("Test get all book")
+    @Description("Get all book information on the list")
+    @Link("https://github.com/KhanhLam98/APITesting_AnhtesterAPI")
     public void getAllBook() {
+        System.out.println("**** Get all books ****");
         Response response = ApiKeyword.getNotAuth(EndPointGlobal.ALLBOOK);
         response.prettyPrint();
+
+        LogUtils.info(response.prettyPrint());
 
         Verify_BookManagement_Response.verifyABook(response);
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Epic("Book Management Test")
+    @Feature("Post Method")
+    @Story("Test create a new book")
+    @Description("Get all book information on the list")
+    @Link("https://github.com/KhanhLam98/APITesting_AnhtesterAPI")
     public void createBook() {
+        System.out.println("**** Create new book ****");
         BookManagement_Lombok newbook = new BookManagement_Lombok();
         newbook.setName(DataFakerHelper.randomBookName());
         newbook.setCategory_id(19);
@@ -48,32 +70,59 @@ public class BookManagement extends BaseTest {
         Response response = ApiKeyword.post(EndPointGlobal.BOOK,newbook);
         response.prettyPrint();
 
+        LogUtils.info(response.prettyPrint());
+
         //Verify response
         Verify_BookManagement_Response.verifyResponse(response,newbook);
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Epic("Book Management Test")
+    @Feature("Get Method")
+    @Story("Test get book's status")
+    @Description("Get all book by status")
+    @Link("https://github.com/KhanhLam98/APITesting_AnhtesterAPI")
     public void getBookByStatus() {
+        System.out.println("**** Get book by Status ****");
         boolean status = true;
 
         Response response = ApiKeyword.get(EndPointGlobal.BOOKBYSTATUS + "?status=" +status);
         response.prettyPrint();
+
+        LogUtils.info(response.prettyPrint());
 
         //Verify response
         Verify_BookManagement_Response.verifyStatusResponse(response, status);
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Epic("Book Management Test")
+    @Feature("Get Method")
+    @Story("Test get book by ID")
+    @Description("Get book information by ID")
+    @Link("https://github.com/KhanhLam98/APITesting_AnhtesterAPI")
     public void getBookByID() {
+        System.out.println("**** Get book by ID ****");
         Response response = ApiKeyword.get(EndPointGlobal.BOOK + "/" +id);
         response.prettyPrint();
+
+        LogUtils.info(response.prettyPrint());
 
         //Verify response
         Verify_BookManagement_Response.verifyBookID(response, id);
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Epic("Book Management Test")
+    @Feature("Put Method")
+    @Story("Test update book information")
+    @Description("Update book information on the list")
+    @Link("https://github.com/KhanhLam98/APITesting_AnhtesterAPI")
     public void updateBook() {
+        System.out.println("**** Update all book informations ****");
         //Set data
         BookManagement_Lombok updateBook = new BookManagement_Lombok();
         updateBook.setName(DataFakerHelper.randomBookName());
@@ -86,12 +135,21 @@ public class BookManagement extends BaseTest {
         Response response = ApiKeyword.put(EndPointGlobal.BOOK + "/" +id, updateBook);
         response.prettyPrint();
 
+        LogUtils.info(response.prettyPrint());
+
         //Verify response
         Verify_BookManagement_Response.verifyResponse(response,updateBook);
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Epic("Book Management Test")
+    @Feature("Patch Method")
+    @Story("Test update book information")
+    @Description("Update book information on the list")
+    @Link("https://github.com/KhanhLam98/APITesting_AnhtesterAPI")
     public void updateBookByPatchMethod() {
+        System.out.println("**** Update some information of a book ****");
         BookManagement_Lombok updateBook = new BookManagement_Lombok();
 
         //Set data
@@ -103,16 +161,27 @@ public class BookManagement extends BaseTest {
         Response response = ApiKeyword.patch(EndPointGlobal.BOOK + "/" +id, updateBook);
         response.prettyPrint();
 
+        LogUtils.info(response.prettyPrint());
+
         //Verify response
         Verify_BookManagement_Response.verifyPatchResponse(response,updateBook);
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Epic("Book Management Test")
+    @Feature("Delete Method")
+    @Story("Test delete book information")
+    @Description("Delete book information on the list")
+    @Link("https://github.com/KhanhLam98/APITesting_AnhtesterAPI")
     public void deleteBook() {
-       Response response = ApiKeyword.delete(EndPointGlobal.BOOK + "/" + 250, TokenGlobal.TOKEN);
+        System.out.println("**** Delete a book ****");
+       Response response = ApiKeyword.delete(EndPointGlobal.BOOK + "/" + 251, TokenGlobal.TOKEN);
        response.prettyPrint();
 
+        LogUtils.info(response.prettyPrint());
+
         //Verify response
-        Verify_BookManagement_Response.verifyDelete(response, 250);
+        Verify_BookManagement_Response.verifyDelete(response, 251);
     }
 }

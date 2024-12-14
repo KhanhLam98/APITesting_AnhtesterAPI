@@ -5,6 +5,7 @@ import helpers.PropertiesHelper;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import reports.AllureManager;
 import utils.LogUtils;
 
 public class TestListener implements ITestListener {
@@ -40,10 +41,11 @@ public class TestListener implements ITestListener {
     public void onTestSuccess(ITestResult result) {
         //Cộng 1 đơn vị vào 1 biến toàn cục để nắm bắt số lượng tcs pass
         LogUtils.info("Test case " + result.getName() + " is passed.");
+        AllureManager.saveTextLog("Test case " + result.getName() + " is passed.");
         ConfigsGlobal.PASSED_TOTAL++;
 
         //Add text detail to Allure Report
-        //AllureManager.saveTextLog("Test case " + result.getName() + " is passed.");
+
     }
 
     @Override
@@ -54,7 +56,7 @@ public class TestListener implements ITestListener {
         ConfigsGlobal.FAILED_TOTAL++;
 
         //Add text detail to Allure Report
-        //AllureManager.saveTextLog("Test case " + result.getName() + " is failed.");
+        AllureManager.saveTextLog("Test case " + result.getName() + " is failed.");
     }
 
     @Override

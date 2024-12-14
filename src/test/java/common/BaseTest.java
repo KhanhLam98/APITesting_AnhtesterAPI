@@ -9,6 +9,8 @@ import keywords.ApiKeyword;
 import model.builder.LoginBuilder;
 import model.pojo.LoginLombok;
 import org.testng.annotations.BeforeTest;
+import reports.AllureManager;
+import utils.LogUtils;
 
 public class BaseTest {
     @BeforeTest
@@ -22,6 +24,7 @@ public class BaseTest {
         response.then().statusCode(200);
 
         TokenGlobal.TOKEN = response.getBody().path("token");
-        //System.out.println(TokenGlobal.TOKEN);
+        LogUtils.info(TokenGlobal.TOKEN);
+        AllureManager.saveTextLog("Token: " + TokenGlobal.TOKEN);
     }
 }
